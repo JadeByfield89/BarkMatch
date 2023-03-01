@@ -5,16 +5,16 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.demo.barkmatch.R
 import com.demo.barkmatch.viewmodel.BreedSearchViewModel
+import com.demo.barkmatch.model.MatchResult
 
 
 class BreedSearchFragment : Fragment() {
@@ -37,7 +37,7 @@ class BreedSearchFragment : Fragment() {
 
             viewModel.searchDogsByBreed(breedName)
 
-            viewModel.matchResults.observe(viewLifecycleOwner){ matchResult ->
+            viewModel.matchResults.observe(viewLifecycleOwner){ matchResult: com.demo.barkmatch.model.MatchResult? ->
 
                 // Make sure we have something to show before loading a new fragment
                 if (matchResult != null && matchResult.messageList.isNotEmpty()) {
@@ -54,7 +54,7 @@ class BreedSearchFragment : Fragment() {
             }
 
             // Show a message to the user in case of an error
-            viewModel.errorMessage.observe(viewLifecycleOwner){message ->
+            viewModel.errorMessage.observe(viewLifecycleOwner){message: String ->
                 if(message.isNotEmpty()){
                     Toast.makeText(context, message, Toast.LENGTH_SHORT)
                 }
@@ -66,6 +66,11 @@ class BreedSearchFragment : Fragment() {
 
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
    private fun showNoResultsDialog(context: Context?){

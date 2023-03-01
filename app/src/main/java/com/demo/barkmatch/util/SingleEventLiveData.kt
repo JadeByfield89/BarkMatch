@@ -1,4 +1,4 @@
-package com.demo.barkmatch
+package com.demo.barkmatch.util
 
 
 import androidx.annotation.MainThread

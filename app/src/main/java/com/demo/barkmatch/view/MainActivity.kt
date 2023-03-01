@@ -1,8 +1,9 @@
-package com.demo.barkmatch
+package com.demo.barkmatch.view
 
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.demo.barkmatch.R
 import com.demo.barkmatch.view.BreedSearchFragment
 
 class MainActivity : AppCompatActivity() {

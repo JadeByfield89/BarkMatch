@@ -2,8 +2,10 @@ package com.demo.barkmatch.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +14,21 @@ import com.demo.barkmatch.view.adapter.BreedSearchResultsAdapter
 
 class BreedSearchResultsFragment: Fragment() {
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_breed_search_results, container, false)
+
+        // Allow the user to go back and search again
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set up and initialize the recyclerview and set a grid layout manager to it that has 2 columns
         var recyclerView = view.findViewById(R.id.breed_search_results_rv) as RecyclerView
@@ -38,6 +49,17 @@ class BreedSearchResultsFragment: Fragment() {
 
         return view
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                activity?.supportFragmentManager?.popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     companion object {
 

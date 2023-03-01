@@ -2,15 +2,16 @@ package com.demo.barkmatch.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.demo.barkmatch.SingleEventLiveData
 import com.demo.barkmatch.application.BarkMatchApplication
+import com.demo.barkmatch.model.MatchResult
+import com.demo.barkmatch.util.SingleEventLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class BreedSearchViewModel: ViewModel() {
 
-     val matchResults: SingleEventLiveData<com.demo.barkmatch.model.MatchResult> = SingleEventLiveData()
+     val matchResults: SingleEventLiveData<MatchResult> = SingleEventLiveData()
      val errorMessage: SingleEventLiveData<String> = SingleEventLiveData()
 
     fun searchDogsByBreed(breed: String): LiveData<com.demo.barkmatch.model.MatchResult> {
