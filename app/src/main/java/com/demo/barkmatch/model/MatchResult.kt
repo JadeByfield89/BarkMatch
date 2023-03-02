@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Data class to store the result of the breed/{name}/images query. A singular 'message' array gets returned with only strings,
- * So no need to create further models. If the results were more complex however, then perhaps a further type "Match" might sense, for example.
+ * So no need to create further models. If the results were more complex however, then perhaps a further type "Match" might make sense, for example.
  *
  * Implements the Parcelable interface so that we can easily pass results from one Fragment to another.
  */

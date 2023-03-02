@@ -20,11 +20,6 @@ class BreedSearchViewModel: ViewModel() {
             Callback<com.demo.barkmatch.model.MatchResult> {
             override fun onResponse(call: Call<com.demo.barkmatch.model.MatchResult>, response: Response<com.demo.barkmatch.model.MatchResult>) {
                 matchResults.postValue(response.body())
-
-                if(!response.isSuccessful || response.errorBody() != null){
-                    errorMessage.postValue(response.errorBody()?.string())
-                }
-
             }
 
             override fun onFailure(call: Call<com.demo.barkmatch.model.MatchResult>, t: Throwable) {

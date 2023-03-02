@@ -12,7 +12,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            // Re-select the last fragment in the backstack
+
+            // Reload the last fragment in the backstack
             val lastFragmentTag = savedInstanceState.getString("breedSearchResultsFragment")
             if (lastFragmentTag != null) {
                 supportFragmentManager.findFragmentByTag(lastFragmentTag)?.let { fragment ->
