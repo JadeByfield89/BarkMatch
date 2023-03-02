@@ -1,6 +1,7 @@
 package com.demo.barkmatch.view
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,10 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.barkmatch.R
+import com.demo.barkmatch.model.MatchResult
 import com.demo.barkmatch.view.adapter.BreedSearchResultsAdapter
 
-class BreedSearchResultsFragment: Fragment() {
+class BreedSearchResultsFragment : Fragment() {
 
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,23 +35,30 @@ class BreedSearchResultsFragment: Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set up and initialize the recyclerview and set a grid layout manager to it that has 2 columns
-        var recyclerView = view.findViewById(R.id.breed_search_results_rv) as RecyclerView
+        recyclerView = view.findViewById(R.id.breed_search_results_rv) as RecyclerView
+
+
+        return view
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenWidth = displayMetrics.widthPixels
+
+        recyclerView = view.findViewById(R.id.breed_search_results_rv) as RecyclerView
         recyclerView?.layoutManager = GridLayoutManager(context, 2)
 
-
-        var adapter = BreedSearchResultsAdapter()
+        var adapter = BreedSearchResultsAdapter(screenWidth)
         recyclerView?.adapter = adapter
 
         // Set up the adapter using the data we received from the bundle, if it's available
-        arguments?.getParcelable<com.demo.barkmatch.model.MatchResult>(ARG_MATCH_RESULT)?.let {
+        arguments?.getParcelable<MatchResult>(ARG_MATCH_RESULT)?.let {
             adapter.updateData(it)
         }
-
-        arguments?.getStringArrayList(ARG_IMAGE_PATHS)?.let {
-            adapter.updateDataLocal(it)
-        }
-
-        return view
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,14 +71,11 @@ class BreedSearchResultsFragment: Fragment() {
         }
     }
 
-
     companion object {
 
         private const val ARG_MATCH_RESULT = "match_result"
-        private const val ARG_IMAGE_PATHS = "image_uris"
 
-
-        fun newInstance(matchResult: com.demo.barkmatch.model.MatchResult): BreedSearchResultsFragment {
+        fun newInstance(matchResult: MatchResult): BreedSearchResultsFragment {
             val args = Bundle().apply {
                 putParcelable(ARG_MATCH_RESULT, matchResult)
             }
@@ -79,7 +87,7 @@ class BreedSearchResultsFragment: Fragment() {
         fun newInstance(imageIds: ArrayList<String>): BreedSearchResultsFragment {
 
             val args = Bundle().apply {
-                putStringArrayList(ARG_IMAGE_PATHS, imageIds)
+                putStringArrayList(ARG_MATCH_RESULT, imageIds)
             }
             return BreedSearchResultsFragment().apply {
                 arguments = args

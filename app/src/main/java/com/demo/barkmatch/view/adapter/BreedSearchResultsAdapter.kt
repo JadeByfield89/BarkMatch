@@ -12,18 +12,12 @@ import com.demo.barkmatch.model.MatchResult
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class BreedSearchResultsAdapter(): RecyclerView.Adapter<BreedSearchResultsAdapter.ViewHolder>() {
+class BreedSearchResultsAdapter(private val screenWidth: Int): RecyclerView.Adapter<BreedSearchResultsAdapter.ViewHolder>() {
 
     private var matchResult: MatchResult = MatchResult(emptyList())
 
     fun updateData(matchResult: MatchResult){
         this.matchResult = matchResult
-        //notifyDataSetChanged()
-    }
-
-    fun updateDataLocal(imageIds: ArrayList<String>){
-        this.matchResult = MatchResult(imageIds)
-        //notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -42,7 +36,7 @@ class BreedSearchResultsAdapter(): RecyclerView.Adapter<BreedSearchResultsAdapte
         val imageUrl = matchResult.messageList[position]
 
         // Load the image using Picasso
-        Picasso.get().load(imageUrl).resize(200,200).centerCrop().into(holder.breedSearchResultIv, object: Callback {
+        Picasso.get().load(imageUrl).resize(screenWidth / 2,screenWidth / 2).centerCrop().into(holder.breedSearchResultIv, object: Callback {
             override fun onSuccess() {
                 // Hide the progress bar if it's visible
                 holder.progressBar.visibility = View.GONE

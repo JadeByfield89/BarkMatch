@@ -45,7 +45,7 @@ class BreedSearchFragment : Fragment() {
 
                     // Show the results fragment
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, breedSearchResultsFragment)
+                        .replace(R.id.fragment_container, breedSearchResultsFragment, "breedSearchResultsFragment")
                         .addToBackStack(null)
                         .commit()
                 }
@@ -96,7 +96,7 @@ class BreedSearchFragment : Fragment() {
                    }
                }
 
-               val breedSearchResultsFragment = BreedSearchResultsFragment.newInstance(localImageList)
+               val breedSearchResultsFragment = BreedSearchResultsFragment.newInstance(MatchResult(localImageList))
 
                // Show the results fragment
                parentFragmentManager.beginTransaction()
